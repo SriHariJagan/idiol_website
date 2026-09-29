@@ -1,0 +1,174 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+:root {
+  --ink: #191612;
+  --ivory: #f7f2e9;
+  --gold: #b98a2f;
+  --bronze: #8c5a2b;
+  --line: rgba(25, 22, 18, 0.12);
+  --header-h: 72px;
+}
+
+* { -webkit-tap-highlight-color: transparent; }
+
+html {
+  scroll-behavior: smooth;
+  text-size-adjust: 100%;
+}
+
+body {
+  margin: 0;
+  background: #fdfbf6;
+  color: var(--ink);
+  font-family: "Inter", system-ui, -apple-system, "Segoe UI", sans-serif;
+  font-size: 16px;
+  line-height: 1.6;
+  -webkit-font-smoothing: antialiased;
+  text-rendering: optimizeLegibility;
+  overflow-x: hidden;
+}
+
+::selection { background: #b98a2f; color: #fff; }
+
+img { max-width: 100%; }
+
+/* ---------- typography ---------- */
+@layer components {
+  .font-display {
+    font-family: "Fraunces", Georgia, "Times New Roman", serif;
+    font-optical-sizing: auto;
+    letter-spacing: -0.02em;
+    line-height: 1.1;
+    text-wrap: balance;
+    overflow-wrap: break-word;
+  }
+  .eyebrow {
+    @apply text-[11px] font-semibold uppercase tracking-luxe text-gold-deep;
+  }
+  .h-display {
+    @apply font-display font-normal;
+    font-size: clamp(1.9rem, 1.35rem + 2.6vw, 3.2rem);
+    line-height: 1.08;
+  }
+  /* NOTE: never name these h-1/h-2/h-3 — those are Tailwind height utilities
+     and would collapse the heading box (height: .25rem) causing text overlap. */
+  .heading-1 {
+    @apply font-display font-normal;
+    font-size: clamp(1.45rem, 1.2rem + 1.4vw, 2.05rem);
+    line-height: 1.16;
+  }
+  .heading-2 {
+    @apply font-display font-normal;
+    font-size: clamp(1.15rem, 1.05rem + 0.8vw, 1.5rem);
+    line-height: 1.2;
+  }
+  .heading-3 { @apply font-display text-lg md:text-xl font-normal; }
+
+  /* Metallic gold gradient for accent words — solid fallback if clip:text is unsupported */
+  .gold-text { color: #8a6420; }
+  .gold-text-light { color: #d9b36a; }
+  @supports ((-webkit-background-clip: text) or (background-clip: text)) {
+    .gold-text {
+      background: linear-gradient(100deg, #7a5518 0%, #c99b42 28%, #f0dcae 50%, #c99b42 72%, #7a5518 100%);
+      -webkit-background-clip: text;
+      background-clip: text;
+      color: transparent;
+      -webkit-text-fill-color: transparent;
+    }
+    .gold-text-light {
+      background: linear-gradient(100deg, #8a6420 0%, #d9b36a 32%, #f8eed6 50%, #d9b36a 68%, #8a6420 100%);
+      -webkit-background-clip: text;
+      background-clip: text;
+      color: transparent;
+      -webkit-text-fill-color: transparent;
+    }
+  }
+  .body-l { @apply text-[15px] md:text-base leading-relaxed text-ink/70; }
+  .body-s { @apply text-[13.5px] leading-relaxed text-ink/65; }
+  .container-shell { @apply mx-auto w-full max-w-shell px-4 md:px-6 lg:px-8; }
+
+  .btn {
+    @apply inline-flex items-center justify-center gap-2 rounded-full font-semibold transition-all duration-300 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-gold focus-visible:ring-offset-2 disabled:opacity-50 disabled:pointer-events-none select-none;
+  }
+  .btn-primary { @apply btn bg-ink text-ivory hover:bg-ink-soft px-6 py-3 text-[13.5px] tracking-wide; }
+  .btn-gold { @apply btn bg-gold text-white hover:bg-gold-deep px-6 py-3 text-[13.5px] tracking-wide shadow-gold; }
+  .btn-outline { @apply btn border border-ink/20 bg-transparent text-ink hover:border-ink hover:bg-ink hover:text-ivory px-6 py-3 text-[13.5px] tracking-wide; }
+  .btn-ghost { @apply btn text-ink/70 hover:text-ink hover:bg-ink/5 px-5 py-2.5 text-sm; }
+  .btn-sm { @apply px-5 py-2.5 text-[13px]; }
+
+  .chip {
+    @apply inline-flex items-center gap-1.5 rounded-full px-3 py-1 text-[11px] font-semibold uppercase tracking-[0.14em];
+  }
+  .card {
+    @apply rounded-xl border border-ink/10 bg-ivory-card shadow-card overflow-hidden;
+  }
+  .hairline { @apply border-ink/10; }
+  .link-underline {
+    background-image: linear-gradient(currentColor, currentColor);
+    background-size: 0% 1px;
+    background-repeat: no-repeat;
+    background-position: left 100%;
+    transition: background-size 0.35s ease;
+    padding-bottom: 2px;
+  }
+  .link-underline:hover { background-size: 100% 1px; }
+
+  .input {
+    @apply w-full rounded-xl border border-ink/15 bg-white px-4 py-3 text-[15px] text-ink placeholder:text-ink/35 transition-colors hover:border-ink/30 focus:outline-none focus:ring-2 focus:ring-gold/60 focus:border-gold;
+  }
+  .label { @apply block text-[13px] font-semibold text-ink mb-1.5; }
+}
+
+/* ---------- textures & imagery ---------- */
+/* Layered warm gallery backdrop — no external images needed */
+.bg-gallery {
+  background:
+    radial-gradient(1100px 520px at 18% 8%, rgba(217, 179, 106, 0.22), transparent 60%),
+    radial-gradient(900px 600px at 88% 18%, rgba(140, 90, 43, 0.16), transparent 62%),
+    radial-gradient(700px 500px at 50% 110%, rgba(25, 22, 18, 0.10), transparent 60%),
+    linear-gradient(180deg, #faf5ea 0%, #f3ead7 46%, #e9dcc2 100%);
+}
+.bg-gallery-dark {
+  background:
+    radial-gradient(1000px 500px at 20% 0%, rgba(217, 179, 106, 0.16), transparent 60%),
+    radial-gradient(800px 520px at 90% 30%, rgba(185, 138, 47, 0.12), transparent 60%),
+    linear-gradient(180deg, #211c15 0%, #171310 60%, #100d0a 100%);
+}
+.bg-stone-soft {
+  background:
+    radial-gradient(600px 300px at 80% 10%, rgba(185,138,47,.12), transparent 60%),
+    linear-gradient(180deg, #fbf7ee, #f4ecdb);
+}
+.texture-grain::after {
+  content: "";
+  position: absolute; inset: 0;
+  pointer-events: none;
+  opacity: 0.5;
+  mix-blend-mode: overlay;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='140' height='140'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='2'/%3E%3CfeColorMatrix values='0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0.06 0'/%3E%3C/filter%3E%3Crect width='140' height='140' filter='url(%23n)'/%3E%3C/svg%3E");
+}
+.arch { border-radius: 999px 999px 24px 24px; }
+.no-scrollbar::-webkit-scrollbar { display: none; }
+.no-scrollbar { -ms-overflow-style: none; scrollbar-width: none; }
+
+.prose-luxe p { text-wrap: pretty; }
+
+/* reveal on scroll */
+.reveal { opacity: 0; transform: translateY(28px); transition: opacity .7s ease, transform .7s cubic-bezier(.22,.61,.36,1); }
+.reveal.is-visible { opacity: 1; transform: none; }
+
+/* focus */
+:focus-visible { outline: 2px solid #b98a2f; outline-offset: 3px; border-radius: 4px; }
+
+/* reduced motion */
+@media (prefers-reduced-motion: reduce) {
+  html { scroll-behavior: auto; }
+  *, *::before, *::after { animation-duration: 0.01ms !important; transition-duration: 0.01ms !important; }
+  .reveal { opacity: 1; transform: none; }
+}
+
+@media (max-width: 1023px) {
+  :root { --header-h: 64px; }
+}
